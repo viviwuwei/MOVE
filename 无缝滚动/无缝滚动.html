@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta   charset="utf-8" />
+<title>无缝滚动</title>
+<style>
+* {padding: 0; margin: 0; }
+#div1 {position: relative; border: 1px solid black; width: 400px;height: 80px; margin:10px auto; overflow: hidden;}
+#div1 ul {position: absolute; left: 0;}
+#div1 ul li {width: 80px; height: 60px; padding :10px; list-style: none; float: left;}
+</style>
+
+<script>
+window.onload=function () 
+{
+	var oDiv=document.getElementById('div1');
+	var oUl=document.getElementsByTagName('ul')[0];
+	var aLi=document.getElementsByTagName('li');
+	var aA=document.getElementsByTagName('a');
+	var timer=null;
+	var iSpeed=0;
+
+	oUl.innerHTML+=oUl.innerHTML;
+	oUl.style.width=aLi.length*aLi[0].offsetWidth+'px';
+
+	function fnMove()
+	{
+          if (oUl.offsetLeft<-oUl.offsetWidth/2)
+           {
+           	 oUl.style.left=0;
+           }
+           else if (oUl.offsetLeft>0) 
+           {
+           	oUl.style.left=-oUl.offsetWidth/2+'px';
+            };
+         oUl.style.left=oUl.offsetLeft+iSpeed+'px';  
+	}
+
+	timer=setInterval (fnMove,30);
+	
+	aA[0].onclick=function()
+	{
+		iSpeed=-2;
+	};
+	aA[1].onclick=function ()
+	{
+		iSpeed=2;
+	};
+	oDiv.onmouseover=function ()
+	{
+		clearInterval(timer);
+	};
+	oDiv.onmouseout=function ()
+	{
+	  timer=setInterval (fnMove,30);	
+	}
+
+}
+</script>
+</head>
+<body>
+	<a href="javascript:;">右移</a>
+	<a href="javascript:;">左移</a>
+<div id="div1">
+	<ul>
+		<li><img src="img/1.jpg" /></li>
+		<li><img src="img/2.jpg" /></li>
+		<li><img src="img/3.jpg" /></li>
+		<li><img src="img/4.jpg" /></li>
+	</ul>
+</div>
+</body>
+</html>
